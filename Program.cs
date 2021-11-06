@@ -8,17 +8,29 @@ namespace TestApp1_11._6._21_CM
     {
         public static void Main(string[] args)
         {
-            List<int> listNumbers = new List<int>();
+            string[] inputNumbers = GetUserInput();
 
+            int[] uniqueNumbers = ConvertUserInputToIntArray(inputNumbers);
+
+            DisplayUniqueNumbers(uniqueNumbers);
+        }
+
+        private static string[] GetUserInput()
+        {
             Console.WriteLine("Please enter a few comma-separated numbers. You are allowed to repeat the same number.");
             string userInput = Console.ReadLine();
-            Console.WriteLine("The numbers input are: " + userInput);
 
             string[] numbers = userInput.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 
+            return numbers;
+        }
+
+        private static int[] ConvertUserInputToIntArray(string[] numbers)
+        {
+            List<int> listNumbers = new List<int>();
+
             foreach (string number in numbers)
             {
-
                 if (int.TryParse(number, out int actualNumber))
                 {
                     listNumbers.Add(actualNumber);
@@ -29,16 +41,12 @@ namespace TestApp1_11._6._21_CM
                 }
             }
 
-            int[] finalNumbers = SingleNumber(listNumbers.ToArray());
-            
-            Console.WriteLine("The non-repeated numbers are: ");
+            int[] uniqueNumbers = SingleNumber(listNumbers.ToArray());
 
-            foreach (var num in finalNumbers)
-                Console.WriteLine(num);
-
-            Console.ReadKey();
+            return uniqueNumbers;
         }
-        public static int[] SingleNumber(int[] nums)
+
+        private static int[] SingleNumber(int[] nums)
         {
             IEnumerable<int> uniqueNumbers = nums
                 .GroupBy(i => i)
@@ -46,6 +54,16 @@ namespace TestApp1_11._6._21_CM
                 .Select(g => g.Key);
 
             return uniqueNumbers.ToArray();
+        }
+
+        private static void DisplayUniqueNumbers(int[] uniqueNumbers)
+        {
+            Console.WriteLine("The non-repeated numbers are: ");
+
+            foreach (var number in uniqueNumbers)
+                Console.WriteLine(number);
+
+            Console.ReadKey();
         }
     }
 }
