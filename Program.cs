@@ -8,58 +8,44 @@ namespace TestApp1_11._6._21_CM
     {
         public static void Main(string[] args)
         {
-            //Console.WriteLine("Please enter a few comma-separated numbers. You are allowed to repeat the same number.");
-            //string userInput = Console.ReadLine();
-            //Console.WriteLine("The numbers input are: " + userInput);
-
-            //string[] numbers = userInput.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-
             List<int> listNumbers = new List<int>();
 
-            listNumbers.Add(1);
-            listNumbers.Add(2);
-            listNumbers.Add(3);
-            listNumbers.Add(4);
-            listNumbers.Add(2);
-            listNumbers.Add(3);
-            listNumbers.Add(4);
-            listNumbers.Add(5);
+            Console.WriteLine("Please enter a few comma-separated numbers. You are allowed to repeat the same number.");
+            string userInput = Console.ReadLine();
+            Console.WriteLine("The numbers input are: " + userInput);
 
-            //foreach (string number in numbers)
-            //{ 
+            string[] numbers = userInput.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
 
-            //    if (int.TryParse(number, out int actualNumber))
-            //    {
-            //        listNumbers.Add(actualNumber);
-            //    }
-            //    else
-            //    {
-            //        Console.WriteLine($"Attempted conversion of '{number ?? "<null>"}' failed.");
-            //    }
-            //}
+            foreach (string number in numbers)
+            {
 
-            int[] finalNumbers;
-            finalNumbers = SingleNumber(listNumbers.ToArray());
+                if (int.TryParse(number, out int actualNumber))
+                {
+                    listNumbers.Add(actualNumber);
+                }
+                else
+                {
+                    Console.WriteLine($"Attempted conversion of '{number ?? "<null>"}' failed.");
+                }
+            }
+
+            int[] finalNumbers = SingleNumber(listNumbers.ToArray());
             
             Console.WriteLine("The non-repeated numbers are: ");
 
-            foreach (int num in finalNumbers)
-            {
+            foreach (var num in finalNumbers)
                 Console.WriteLine(num);
-            }
 
             Console.ReadKey();
         }
         public static int[] SingleNumber(int[] nums)
         {
-            List<int> nonRepeatedNumbers = new List<int>();
+            IEnumerable<int> uniqueNumbers = nums
+                .GroupBy(i => i)
+                .Where(g => g.Count() == 1)
+                .Select(g => g.Key);
 
-            foreach (int num in nums.Distinct())
-            {
-                nonRepeatedNumbers.Add(num);
-            }
-
-            return nonRepeatedNumbers.ToArray();
+            return uniqueNumbers.ToArray();
         }
     }
 }
