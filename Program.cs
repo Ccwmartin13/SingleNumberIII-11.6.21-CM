@@ -10,7 +10,9 @@ namespace TestApp1_11._6._21_CM
         {
             string[] inputNumbers = GetUserInput();
 
-            int[] uniqueNumbers = ConvertUserInputToIntArray(inputNumbers);
+            List<int> listNumbers = ConvertUserInputToIntList(inputNumbers);
+
+            int[] uniqueNumbers = SingleNumber(listNumbers.ToArray());
 
             DisplayUniqueNumbers(uniqueNumbers);
         }
@@ -25,7 +27,7 @@ namespace TestApp1_11._6._21_CM
             return numbers;
         }
 
-        private static int[] ConvertUserInputToIntArray(string[] numbers)
+        private static List<int> ConvertUserInputToIntList(string[] numbers)
         {
             List<int> listNumbers = new List<int>();
 
@@ -41,9 +43,7 @@ namespace TestApp1_11._6._21_CM
                 }
             }
 
-            int[] uniqueNumbers = SingleNumber(listNumbers.ToArray());
-
-            return uniqueNumbers;
+            return listNumbers;
         }
 
         private static int[] SingleNumber(int[] nums)
