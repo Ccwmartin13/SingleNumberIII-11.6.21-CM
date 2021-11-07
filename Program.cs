@@ -45,15 +45,15 @@ namespace TestApp1_11._6._21_CM
 
         private static void TryConvertNumbers(string[] numbers, List<int> listNumbers)
         {
-            foreach (string number in numbers)
+            foreach (string possibleNumber in numbers)
             {
-                if (int.TryParse(number, out int actualNumber))
+                if (int.TryParse(possibleNumber, out int actualNumber))
                 {
                     listNumbers.Add(actualNumber);
                 }
                 else
                 {
-                    throw new Exception($"\r\nAttempted conversion of '{number ?? "<null>"}' failed. \r\nPlease try again with only numbers.");
+                    throw new Exception($"\r\nAttempted conversion of '{possibleNumber ?? "<null>"}' failed. \r\nPlease try again with only numbers.");
                 }
             }
         }
