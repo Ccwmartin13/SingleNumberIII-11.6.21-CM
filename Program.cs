@@ -10,11 +10,18 @@ namespace TestApp1_11._6._21_CM
         {
             string[] inputNumbers = GetUserInput();
 
-            List<int> listNumbers = ConvertUserInputToIntList(inputNumbers);
+            try
+            {
+                List<int> listNumbers = ConvertUserInputToIntList(inputNumbers);
+                
+                int[] uniqueNumbers = SingleNumber(listNumbers.ToArray());
 
-            int[] uniqueNumbers = SingleNumber(listNumbers.ToArray());
-
-            DisplayUniqueNumbers(uniqueNumbers);
+                DisplayUniqueNumbers(uniqueNumbers);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         private static string[] GetUserInput()
@@ -30,7 +37,14 @@ namespace TestApp1_11._6._21_CM
         private static List<int> ConvertUserInputToIntList(string[] numbers)
         {
             List<int> listNumbers = new List<int>();
+            
+            TryConvertNumbers(numbers, listNumbers);
 
+            return listNumbers;
+        }
+
+        private static void TryConvertNumbers(string[] numbers, List<int> listNumbers)
+        {
             foreach (string number in numbers)
             {
                 if (int.TryParse(number, out int actualNumber))
@@ -39,11 +53,9 @@ namespace TestApp1_11._6._21_CM
                 }
                 else
                 {
-                    Console.WriteLine($"Attempted conversion of '{number ?? "<null>"}' failed.");
+                    throw new Exception($"\r\nAttempted conversion of '{number ?? "<null>"}' failed. \r\nPlease try again with only numbers.");
                 }
             }
-
-            return listNumbers;
         }
 
         private static int[] SingleNumber(int[] nums)
@@ -58,7 +70,7 @@ namespace TestApp1_11._6._21_CM
 
         private static void DisplayUniqueNumbers(int[] uniqueNumbers)
         {
-            Console.WriteLine("The non-repeated numbers are: ");
+            Console.WriteLine("\r\nThe non-repeated number(s) are: ");
 
             foreach (var number in uniqueNumbers)
                 Console.WriteLine(number);
